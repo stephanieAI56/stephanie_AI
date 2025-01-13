@@ -123,14 +123,18 @@ def main():
                 st.write("---")
                 st.write("### AI Analysis")
                 
+                # Adding a prompt input field
+                custom_prompt = st.text_area("Or enter your own prompt for analysis:", "")
+
                 analysis_type = st.selectbox(
                     "What would you like to analyze?",
-                    ["Summarize content", "Check grammar and style", "Extract key information", "Analyze sentiment"]
+                    ["Summarize content", "Check grammar and style", "Extract key information", "Analyze sentiment", "Custom Analysis"]
                 )
 
                 if st.button("Analyze"):
                     with st.spinner("Analyzing..."):
                         try:
+                            analysis_content = custom_prompt if custom_prompt else file_content
                             if file_type in ['image/png', 'image/jpeg', 'image/jpg']:
                                 # Use GPT-4 Vision for image analysis
                                 response = openai.chat.completions.create(
@@ -151,7 +155,7 @@ def main():
                                     model="gpt-4-turbo-preview",
                                     messages=[
                                         {"role": "system", "content": f"You are an expert at {analysis_type.lower()}. Analyze the following content:"},
-                                        {"role": "user", "content": file_content}
+                                        {"role": "user", "content": analysis_content}  # Use custom prompt or file content
                                     ]
                                 )
                             
