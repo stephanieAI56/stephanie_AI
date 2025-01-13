@@ -8,7 +8,7 @@ import io
 import os
 from dotenv import load_dotenv
 
-os.environ["OPENAI_API_KEY"] = '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'
+os.environ["OPENAI_API_KEY"] = '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'
 
 # Load environment variables
 load_dotenv()
